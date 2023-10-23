@@ -46,6 +46,13 @@ specific_searchBtn.click()
 
 #접수중인 장소만 출력되도록 처리 (완료)
 
+# 현재 접수중인 장소들을 순차적으로 돌면서 예약 시도 
+# 순차적으로 Thumbnail 부분 클릭 
+place_list = driver.find_element(By.CLASS_NAME, "img_board")
+places = place_list.find_elements(By.TAG_NAME, "li")
+
+for place in places:
+    print(place)
 
 
 
