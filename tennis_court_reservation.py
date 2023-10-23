@@ -1,15 +1,16 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from common_func import closePopupDialog
-from main_logic_function import login, mainCategorySetup, chooseAvailablePlaces
+from main_logic_function import login, mainCategorySetup, chooseAvailablePlaces, chooseReservationDateAndReserve
 import time
 
 
 url = "https://yeyak.seoul.go.kr/web/main.do"
 
-user_id = "사용자 아이디"
-user_password = "사용자 비밀번호"
+user_id = "dlgusrl6022"
+user_password = "1q2w3e4r!"
 reservation = "족구장"
+reservation_date = "20231122"
 
 
 def initialDriverSetup(url=url):
@@ -36,4 +37,11 @@ if __name__ == '__main__':
     # 현재 접수중인 장소들을 순차적으로 예약 시도
     chooseAvailablePlaces(driver=driver)
 
+    # 예약 날짜 선택
+    chooseReservationDateAndReserve(driver=driver, date=reservation_date)
+
+    # 매크로 방지 화면 요소 제거 Copyright_Message
+    img_div_el = driver.find_element(By.CLASS_NAME, "img_box")
+
+    # 예약하고자 하는 날짜 선택
     time.sleep(1000000)

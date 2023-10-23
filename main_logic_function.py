@@ -70,3 +70,12 @@ def chooseAvailablePlaces(**kwargs):
         popup_close_button = driver.find_element(By.CLASS_NAME, "pop_x")
         popup_close_button.click()
         break
+
+def chooseReservationDateAndReserve(**kwargs):
+    driver = kwargs['driver']
+    date = kwargs['date']
+    date_td_el = driver.find_element(By.ID, f"calendar_{date}")
+    date_td_el.click()
+    #  예약버튼 클릭
+    reservation_button = driver.find_element(By.CLASS_NAME, "common_btn")
+    reservation_button.click()
