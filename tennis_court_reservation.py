@@ -7,8 +7,8 @@ import time
 
 url = "https://yeyak.seoul.go.kr/web/main.do"
 
-user_id = "dlgusrl6022"
-user_password = "1q2w3e4r!"
+user_id = "사용자 아이디"
+user_password = "사용자 비밀번호"
 reservation = "족구장"
 
 
