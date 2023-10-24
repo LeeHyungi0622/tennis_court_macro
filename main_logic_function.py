@@ -49,6 +49,12 @@ def mainCategorySetup(**kwargs):
 
     specific_search.click()
 
+    # "실내" 검색어 입력 및 검색 버튼 클릭
+    search_input = driver.find_element(By.XPATH, "//input[@name='sch_text']")
+    search_input.send_keys("실내")
+    confirm_button = driver.find_element(By.XPATH, "//button[@class='btn_ok']")
+    confirm_button.click()
+
     # 접수중 접수 상태 체크박스 클릭
     registration_status = driver.find_element(By.CLASS_NAME, "sch_svc_sttus_R403")
     registration_status.click()

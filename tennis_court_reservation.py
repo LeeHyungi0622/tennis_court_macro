@@ -3,14 +3,15 @@ from selenium.webdriver.common.by import By
 from common_func import closePopupDialog
 from main_logic_function import login, mainCategorySetup, chooseAvailablePlaces, chooseReservationDateAndReserve, chooseSpecificSchedule, chooseNumberOfPeople, agreeTermsOfUse
 import time
+import datetime
 
 
 url = "https://yeyak.seoul.go.kr/web/main.do"
 
 user_id = "사용자 아이디"
 user_password = "사용자 비밀번호"
-reservation = "족구장"
-reservation_date = "20231122"
+reservation = "테니스장"
+reservation_date = "20231121"
 """
 회차 선택 시작시간
 테니스장 기준 (개방시간 09:00 ~ 17:00)
@@ -20,6 +21,8 @@ reservation_date = "20231122"
 15:00-17:00
 """
 start_time = "15:00"
+reservation_start_time_hour ="07"
+reservation_start_time_min ="00"
 
 
 def initialDriverSetup(url=url):
@@ -31,35 +34,35 @@ def initialDriverSetup(url=url):
 
 
 if __name__ == '__main__':
-    # 초기 driver setup
-    driver = initialDriverSetup(url=url)
 
-    # 로그인
-    login(driver=driver, user_id=user_id, user_pwd=user_password)
-    
-    """
-    접수중인 장소만 출력되도록 처리
-    # 체육시설 [선택] - 종목 선택 - 상세 검색에서 "접수중" 필터 후 "상세검색"
-    """
-    mainCategorySetup(driver=driver, reservation=reservation)
+    while True:
+        now = datetime.datetime.now()
+        if str(now.time())[0:2] == reservation_start_time_hour and str(now.time())[3:5] == reservation_start_time_min:
+            # 초기 driver setup
+            driver = initialDriverSetup(url=url)
 
-    # 현재 접수중인 장소들을 순차적으로 예약 시도
-    chooseAvailablePlaces(driver=driver)
+            # 로그인
+            login(driver=driver, user_id=user_id, user_pwd=user_password)
+            
+            """
+            접수중인 장소만 출력되도록 처리
+            # 체육시설 [선택] - 종목 선택 - 상세 검색에서 "접수중" 필터 후 "상세검색"
+            """
+            mainCategorySetup(driver=driver, reservation=reservation)
 
-    time.sleep(3)
-    # 예약 날짜 선택
-    chooseReservationDateAndReserve(driver=driver, date=reservation_date)
+            # 현재 접수중인 장소들을 순차적으로 예약 시도
+            chooseAvailablePlaces(driver=driver)
 
-    time.sleep(3)
-    # 회차 선택
-    chooseSpecificSchedule(driver=driver, start_time=start_time)
+            # 예약 날짜 선택
+            chooseReservationDateAndReserve(driver=driver, date=reservation_date)
 
-    time.sleep(3)
-    # 이용 인원 선택
-    chooseNumberOfPeople(driver=driver)
+            # 회차 선택
+            chooseSpecificSchedule(driver=driver, start_time=start_time)
 
-    time.sleep(3)
-    # 약관 동의 및 최종 예약 버튼 클릭
-    agreeTermsOfUse(driver=driver)
+            # 이용 인원 선택
+            chooseNumberOfPeople(driver=driver)
 
-    time.sleep(1000)
+            # 약관 동의 및 최종 예약 버튼 클릭
+            agreeTermsOfUse(driver=driver)
+
+            time.sleep(1000)
