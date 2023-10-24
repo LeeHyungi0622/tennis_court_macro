@@ -19,7 +19,7 @@ reservation_date = "20231122"
 13:00-15:00
 15:00-17:00
 """
-start_time = "12:00"
+start_time = "15:00"
 
 
 def initialDriverSetup(url=url):
@@ -46,16 +46,20 @@ if __name__ == '__main__':
     # 현재 접수중인 장소들을 순차적으로 예약 시도
     chooseAvailablePlaces(driver=driver)
 
+    time.sleep(3)
     # 예약 날짜 선택
     chooseReservationDateAndReserve(driver=driver, date=reservation_date)
 
+    time.sleep(3)
     # 회차 선택
     chooseSpecificSchedule(driver=driver, start_time=start_time)
 
+    time.sleep(3)
     # 이용 인원 선택
     chooseNumberOfPeople(driver=driver)
 
+    time.sleep(3)
     # 약관 동의 및 최종 예약 버튼 클릭
     agreeTermsOfUse(driver=driver)
 
-    time.sleep(1000000)
+    time.sleep(1000)
