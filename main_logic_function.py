@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
 from common_func import closePopupDialog
+from selenium.webdriver.common.alert import Alert
 
 def login(**kwargs):
     driver = kwargs['driver']
@@ -79,3 +80,30 @@ def chooseReservationDateAndReserve(**kwargs):
     #  예약버튼 클릭
     reservation_button = driver.find_element(By.CLASS_NAME, "common_btn")
     reservation_button.click()
+
+def chooseSpecificSchedule(**kwargs):
+    driver = kwargs['driver']
+    start_time = kwargs['start_time']
+    time_schedule = driver.find_element(By.XPATH, f"//a[@data-start-hm='{start_time}']")
+    time_schedule_li = time_schedule.find_element(By.XPATH, ".//..")
+    time_schedule_li.click()
+
+
+def chooseNumberOfPeople(**kwargs):
+    driver = kwargs['driver']
+    increase_number = driver.find_element(By.XPATH, f"//button[@class='user_plus']")
+    increase_number.click()
+
+def agreeTermsOfUse(**kwargs):
+    driver = kwargs['driver']
+    input_el = driver.find_element(By.XPATH, f"//input[@id='chk_agree_all']")
+    agree_all = input_el.find_element(By.XPATH, ".//..")
+    agree_all.click()
+    float_menu = driver.find_element(By.CLASS_NAME, "info_wrap")
+    final_confirm_button = float_menu.find_element(By.CLASS_NAME, "blue")
+    final_confirm_button.click()
+
+    # 예약정보 최종 확인
+    Alert(driver).accept()
+    # 예약결제 최종 확인
+    Alert(driver).accept()
